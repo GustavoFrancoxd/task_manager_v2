@@ -1,0 +1,77 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar shadow-sm vh-100">
+      <div class="position-sticky pt-3">
+        <h5 class="text-center mb-3 mt-2">{{ username }}</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active text-primary fw-bold" href="{{ url_for('task.dashboard') }}">
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('task.crear_nota') }}"> 
+              Agregar Nota
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <!-- Navbar -->
+      <nav class="navbar navbar-light bg-white shadow-sm mt-3 mb-4 rounded">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1">FrankliNotes</span>
+          <form class="d-flex">
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">Cerrar Sesión</a>
+          </form>
+        </div>
+      </nav>
+
+      <!-- Table of tasks -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Contenido</th>
+              <th>Estatus</th>
+              <th>Fecha de creación</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for nota in notas %}
+            <tr>
+              <td>{{ nota.contenido }}</td>
+              <td>
+                {% if nota.completado %}
+                <span class="badge bg-success">Terminada</span>
+                {% else %}
+                <span class="badge bg-secondary">No terminada</span>
+                {% endif %}
+              </td>
+              <td>{{ nota.fecha_creacion.strftime('%Y-%m-%d %H:%M') if nota.fecha_creacion else 'Sin fecha' }}</td>
+              <td>
+                <form action="{{ url_for('task.cambiar_estatus', nota_id=nota.id_tarea) }}" method="post"> <!-- Ruta pendiente -->
+                  <button type="submit" class="btn btn-sm btn-outline-primary">
+                    Cambiar Estatus
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'bootstrap/base.html'%}
+{%import 'bootstrap/wtf.html' as wtf%}
+
+{% block head %}
+{{super()}}
+<title>{% block title %} Login {% endblock %}</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST">
+        {{ signin_form.csrf_token }}
+        <div class="mb-3">
+            {{ signin_form.username.label(class="form-label") }}
+            {{ signin_form.username(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ signin_form.password.label(class="form-label") }}
+            {{ signin_form.password(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ signin_form.confirm_password.label(class="form-label") }}
+            {{ signin_form.confirm_password(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ signin_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+
+</div>
+{% endblock %}
