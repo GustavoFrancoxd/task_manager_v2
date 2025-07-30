@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from app.forms.auth_forms import LoginForm, SigninForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import re #libreria de expresiones regulares excelentes para validaciones
-#import pymysql
 from sqlalchemy.exc import IntegrityError
 from app.models.models import Usuario
 from app.extensions import database
@@ -11,8 +10,6 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
-    #from app import mysql
-    
     if 'username' not in session:
         login_form = LoginForm()
         
@@ -23,11 +20,7 @@ def login():
         if login_form.validate_on_submit():
             username = login_form.username.data
             password = login_form.password.data
-            #cur = mysql.connection.cursor()
-            #cur.execute("SELECT username, password FROM usuario WHERE username = %s", (username,))
-            #user = cur.fetchone()
             user = Usuario.query.filter_by(username=username).first()
-            #if user and check_password_hash(user['password'], password):
             if user and check_password_hash(user.password, password):
                 session['username'] = username
                 return redirect(url_for('task.dashboard'))
@@ -45,7 +38,6 @@ def logout():
 
 @auth.route('/signin', methods=['GET','POST'])
 def signin():
-    from app import mysql
     signin_form = SigninForm()
     
     context = {
@@ -55,7 +47,6 @@ def signin():
     if signin_form.validate_on_submit():
         username = signin_form.username.data
         password = signin_form.password.data
-        #hashed_password = generate_password_hash(signin_form.password.data)
         
         try:
             if (len(password) < 7 or not re.search(r'[A-Z]', password) or not re.search(r'\d', password) or not re.search(r'[!@#$%^&*(),.?":{}|<>_-]', password)):
@@ -67,9 +58,6 @@ def signin():
             if password != confirm_password:
                 raise ValueError("Las contraseñas no coinciden.")
             
-            #cur = mysql.connection.cursor()
-            #cur.execute("INSERT INTO usuario(username, password) VALUE (%s, %s)",(username, hashed_password))
-            #mysql.connection.commit() 
             nuevo_usuario = Usuario(username=username, password=hashed_password)
             database.session.add(nuevo_usuario)
             database.session.commit()
