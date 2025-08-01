@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, redirect, url_for, session, flash
 from app.forms.auth_forms import LoginForm, SigninForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import re #libreria de expresiones regulares excelentes para validaciones

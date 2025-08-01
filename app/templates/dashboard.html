@@ -16,7 +16,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('task.crear_nota') }}"> 
+            <a class="nav-link" href="{{ url_for('task.crear_nota') }}">
               Agregar Nota
             </a>
           </li>
@@ -49,24 +49,37 @@
           </thead>
           <tbody>
             {% for nota in notas %}
-            <tr>
-              <td>{{ nota.contenido }}</td>
-              <td>
-                {% if nota.completado %}
-                <span class="badge bg-success">Terminada</span>
-                {% else %}
-                <span class="badge bg-secondary">No terminada</span>
-                {% endif %}
-              </td>
-              <td>{{ nota.fecha_creacion.strftime('%Y-%m-%d %H:%M') if nota.fecha_creacion else 'Sin fecha' }}</td>
-              <td>
-                <form action="{{ url_for('task.cambiar_estatus', nota_id=nota.id_tarea) }}" method="post"> <!-- Ruta pendiente -->
-                  <button type="submit" class="btn btn-sm btn-outline-primary">
-                    Cambiar Estatus
-                  </button>
-                </form>
-              </td>
-            </tr>
+              {% if nota.activo %}
+                <tr>
+                  <td>{{ nota.contenido }}</td>
+                  <td>
+                    {% if nota.completado %}
+                    <span class="badge bg-success">Terminada</span>
+                    {% else %}
+                    <span class="badge bg-secondary">No terminada</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ nota.fecha_creacion.strftime('%Y-%m-%d %H:%M') if nota.fecha_creacion else 'Sin fecha' }}</td>
+                  <td>
+                    <form action="{{ url_for('task.cambiar_estatus', nota_id=nota.id_tarea) }}" method="post">
+                      <button type="submit" class="btn btn-sm btn-outline-primary">
+                        Cambiar Estatus
+                      </button>
+                    </form>
+                    <form action="{{ url_for('task.editar_nota', nota_id=nota.id_tarea) }}" method="post">
+                      <!-- Ruta pendiente -->
+                      <button type="submit" class="btn btn-sm btn-outline-primary">
+                        Modificar
+                      </button>
+                    </form>
+                    <form action="{{ url_for('task.eliminar_nota', nota_id=nota.id_tarea) }}" method="post">
+                      <button type="submit" class="btn btn-sm btn-outline-primary">
+                        Eliminar
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              {% endif %}
             {% endfor %}
           </tbody>
         </table>
