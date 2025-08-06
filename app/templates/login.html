@@ -28,8 +28,14 @@
     </form>
 
     <div class="text-center">
-        <a href="{{ url_for('auth.signin') }}" class="btn btn-link"> <!--pendiente-->
+        <a href="{{ url_for('auth.signin') }}" class="btn btn-link">
             Regístrate aquí
+        </a>
+    </div>
+
+    <div class="text-center">
+        <a href="{{ url_for('auth.reset_request') }}" class="btn btn-link">
+            ¿Olvidaste tu contraseña?
         </a>
     </div>
 </div>
