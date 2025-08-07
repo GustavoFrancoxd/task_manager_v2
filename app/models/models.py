@@ -5,7 +5,7 @@ from app.extensions import database
 class Usuario(database.Model):
     __tablename__ = "usuario"
     id_usuario = database.Column(database.Integer, primary_key=True)
-    username = database.Column(database.String(50), unique=True, nullable=False)
+    email = database.Column(database.String(50), unique=True, nullable=False)
     password = database.Column(database.String(255), nullable=False)
     token = database.Column(database.String(255), nullable=True)
     token_expira = database.Column(database.DateTime, nullable=True)

@@ -18,14 +18,14 @@ def validar_password_segura(form, field):
 
 
 class LoginForm(FlaskForm):
-    username = StringField("Nombre del usuario", validators=[DataRequired()])
+    email = StringField("Nombre del usuario", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Enviar")
 
 
 class SigninForm(FlaskForm):
-    username = StringField(
-        "Correo electrónico",
+    email = StringField(
+        "email electrónico",
         validators=[
             DataRequired(),
             Email(message="Ingresa un correo electrónico válido"),
@@ -45,7 +45,7 @@ class SigninForm(FlaskForm):
 
 
 class PasswordResetRequestForm(FlaskForm):
-    username = StringField(
+    email = StringField(
         "Correo electrónico",
         validators=[
             DataRequired(),

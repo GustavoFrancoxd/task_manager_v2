@@ -12,8 +12,8 @@
     <form method="POST">
         {{ signin_form.csrf_token }}
         <div class="mb-3">
-            {{ signin_form.username.label(class="form-label") }}
-            {{ signin_form.username(class="form-control") }}
+            {{ signin_form.email.label(class="form-label") }}
+            {{ signin_form.email(class="form-control") }}
         </div>
 
         <div class="mb-3">

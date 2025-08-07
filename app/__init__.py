@@ -1,7 +1,7 @@
 from flask import Flask
 from app.config import Config
 from app.routes import register_blueprints
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap  # type: ignore
 from app.extensions import database, mail
 
 

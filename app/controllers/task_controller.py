@@ -6,10 +6,10 @@ from app.extensions import database
 
 
 def dashboard_controller():
-    if "username" not in session:
+    if "email" not in session:
         return redirect(url_for("auth.login"))
 
-    usuario = Usuario.query.filter_by(username=session["username"]).first()
+    usuario = Usuario.query.filter_by(email=session["email"]).first()
 
     if not usuario:
         return redirect(url_for("auth.login"))
@@ -30,13 +30,13 @@ def dashboard_controller():
         .all()
     )
 
-    context = {"notas": tareas, "username": session["username"]}
+    context = {"notas": tareas, "email": session["email"]}
 
     return render_template("dashboard.html", **context)
 
 
 def cambiar_estatus_controller(nota_id):
-    if "username" not in session:
+    if "email" not in session:
         return redirect(url_for("auth.login"))
 
     tarea = Tarea.query.get(nota_id)
@@ -57,7 +57,7 @@ def cambiar_estatus_controller(nota_id):
 
 
 def crear_nota_controller():
-    if "username" not in session:
+    if "email" not in session:
         return redirect(url_for("auth.login"))
 
     form = NotaForm()
@@ -65,7 +65,7 @@ def crear_nota_controller():
     if form.validate_on_submit():
         contenido = form.contenido.data
 
-        usuario = Usuario.query.filter_by(username=session["username"]).first()
+        usuario = Usuario.query.filter_by(email=session["email"]).first()
         if not usuario:
             # flash('Usuario no encontrado.')
             return redirect(url_for("auth.login"))
@@ -95,13 +95,13 @@ def crear_nota_controller():
         # flash('Nota creada exitosamente.', 'success')
         return redirect(url_for("task.dashboard"))
 
-    context = {"form": form, "username": session["username"]}
+    context = {"form": form, "email": session["email"]}
 
     return render_template("createnote.html", **context)
 
 
 def eliminar_nota_controller(nota_id):
-    if "username" not in session:
+    if "email" not in session:
         return redirect(url_for("auth.login"))
 
     tarea = Tarea.query.get_or_404(nota_id)
@@ -118,7 +118,7 @@ def eliminar_nota_controller(nota_id):
 
 
 def editar_nota_controller(nota_id):
-    if "username" not in session:
+    if "email" not in session:
         return redirect(url_for("auth.login"))
 
     tarea = Tarea.query.get_or_404(nota_id)
@@ -142,5 +142,5 @@ def editar_nota_controller(nota_id):
 
         return redirect(url_for("task.dashboard"))
 
-    context = {"form": form, "username": session["username"], "nota_id": nota_id}
+    context = {"form": form, "email": session["email"], "nota_id": nota_id}
     return render_template("editnote.html", **context)

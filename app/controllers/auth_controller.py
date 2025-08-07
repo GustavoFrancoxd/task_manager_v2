@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.models import Usuario
 from app.extensions import database, mail
-from flask_mail import Message
+from flask_mail import Message  # type: ignore
 from datetime import datetime, timedelta
 import secrets, re
 from app.utils.token import generar_token_confirmacion, verificar_token_confirmacion
@@ -15,21 +15,21 @@ from app.forms.auth_forms import (
 
 
 def login_controller():
-    if "username" not in session:
+    if "email" not in session:
         login_form = LoginForm()
 
         context = {"login_form": login_form}
 
         if login_form.validate_on_submit():
-            username = login_form.username.data
+            email = login_form.email.data
             password = login_form.password.data
-            user = Usuario.query.filter_by(username=username).first()
+            user = Usuario.query.filter_by(email=email).first()
             if user and check_password_hash(user.password, password):
                 if not user.confirmado:
                     print("Tu correo aún no ha sido confirmado.")
                     return redirect(url_for("auth.login"))
                 else:
-                    session["username"] = username
+                    session["email"] = email
                     return redirect(url_for("task.dashboard"))
         return render_template("login.html", **context)
     else:
@@ -47,11 +47,11 @@ def signin_controller():
     context = {"signin_form": signin_form}
 
     if signin_form.validate_on_submit():
-        username = signin_form.username.data
+        email = signin_form.email.data
         password = signin_form.password.data
 
         try:
-            if Usuario.query.filter_by(username=username).first():
+            if Usuario.query.filter_by(email=email).first():
                 raise ValueError("Este correo ya está registrado.")
 
             if (
@@ -70,8 +70,8 @@ def signin_controller():
             if password != confirm_password:
                 raise ValueError("Las contraseñas no coinciden.")
 
-            nuevo_usuario = Usuario(username=username, password=hashed_password)
-            token = generar_token_confirmacion(nuevo_usuario.username)
+            nuevo_usuario = Usuario(email=email, password=hashed_password)
+            token = generar_token_confirmacion(nuevo_usuario.email)
             nuevo_usuario.token = token
             nuevo_usuario.token_expira = datetime.utcnow() + timedelta(hours=1)
             database.session.add(nuevo_usuario)
@@ -79,7 +79,7 @@ def signin_controller():
 
             confirm_url = url_for("auth.confirm_email", token=token, _external=True)
 
-            msg = Message("Confirma tu cuenta", recipients=[nuevo_usuario.username])
+            msg = Message("Confirma tu cuenta", recipients=[nuevo_usuario.email])
             msg.body = f"Por favor haz clic en el siguiente enlace para confirmar tu cuenta:\n{confirm_url}"
             mail.send(msg)
 
@@ -89,7 +89,7 @@ def signin_controller():
         except ValueError as ve:
             print(f"Error de validación: {ve}")
         # except pymysql.err.IntegrityError as e:
-        except IntegrityError as e:
+        except IntegrityError as e:  # type: ignore
             if "1062" in str(e):
                 # flash("Ese nombre de usuario ya está en uso. Intenta con otro.", "danger")
                 print("Ese nombre de usuario ya está en uso. Intenta con otro.")
@@ -126,7 +126,7 @@ def reset_request_controller():
     form = PasswordResetRequestForm()
 
     if form.validate_on_submit():
-        user = Usuario.query.filter_by(username=form.username.data).first()
+        user = Usuario.query.filter_by(email=form.email.data).first()
         if user:
             token = secrets.token_urlsafe(32)
             user.token = token
@@ -141,8 +141,8 @@ def reset_request_controller():
             msg = Message(
                 "Recuperar contraseña",
                 sender="gustavofranco2530@gmail.com",
-                recipients=[user.username],
-            )  # suponiendo que el username es el correo
+                recipients=[user.email],
+            )
             msg.body = f"Hola, haz clic en el siguiente enlace para cambiar tu contraseña:\n{reset_link}"
             mail.send(msg)
             print("Se envió un enlace a tu correo.")
@@ -157,7 +157,7 @@ def reset_request_controller():
 
 def reset_token_controller(token):
     user = Usuario.query.filter_by(token=token).first()
-    print(f"nombre de usuario: {user.username}")
+    print(f"nombre de usuario: {user.email}")
     if not user or not user.token_expira or datetime.utcnow() > user.token_expira:
         print("Token inválido o expirado.")
         return redirect(url_for("auth.reset_request"))
