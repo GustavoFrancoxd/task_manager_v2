@@ -1,0 +1,106 @@
+# Gestor de Tareas v2
+
+Un sistema completo de gestión de tareas desarrollado con Flask que permite a los usuarios crear, editar, eliminar y gestionar sus tareas de manera eficiente.
+
+## 🚀 Características
+
+- **Autenticación de usuarios**: Registro, inicio de sesión y recuperación de contraseña
+- **Gestión de tareas**: Crear, editar, eliminar y cambiar estado de tareas
+- **Dashboard interactivo**: Vista principal con todas las tareas del usuario
+- **Historial de cambios**: Seguimiento completo de modificaciones en las tareas
+- **Interfaz responsive**: Diseño adaptable con Bootstrap
+- **Notificaciones por email**: Sistema de recuperación de contraseña
+
+## 📋 Requisitos del Sistema
+
+- Python 3.12+
+- MySQL 5.7+ o MariaDB 10.3+
+- Navegador web moderno
+
+## 🛠️ Instalación
+
+### 1. Clonar el repositorio
+```bash
+git clone <url-del-repositorio>
+cd task_manager_v2
+```
+
+### 2. Crear entorno virtual
+```bash
+python -m venv venv312
+```
+
+### 3. Activar entorno virtual
+```bash
+# Windows
+venv312\Scripts\activate
+
+# Linux/Mac
+source venv312/bin/activate
+```
+
+### 4. Instalar dependencias
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Configurar base de datos
+- Crear una base de datos MySQL llamada `bd_notas`
+- Actualizar las credenciales en `app/config.py`
+
+### 6. Ejecutar la aplicación
+```bash
+python main.py
+```
+
+La aplicación estará disponible en `http://localhost:5001`
+
+## 🏗️ Estructura del Proyecto
+
+```
+task_manager_v2/
+├── app/
+│   ├── controllers/         # Lógica de negocio
+│   ├── forms/              # Formularios WTF
+│   ├── models/             # Modelos de base de datos
+│   ├── routes/             # Rutas de la aplicación
+│   ├── static/             # Archivos estáticos (CSS, JS, imágenes)
+│   ├── templates/          # Plantillas HTML
+│   └── utils/              # Utilidades (tokens, etc.)
+├── venv312/                # Entorno virtual
+├── main.py                 # Punto de entrada
+└── requirements.txt        # Dependencias
+```
+
+## 🔧 Configuración
+
+Edita el archivo `app/config.py` para personalizar:
+
+- Configuración de base de datos
+- Configuración de email
+- Clave secreta
+- Configuración del servidor
+
+## 📖 Uso Básico
+
+1. **Registro**: Crea una cuenta nueva
+2. **Inicio de sesión**: Accede con tus credenciales
+3. **Dashboard**: Ve todas tus tareas
+4. **Crear tarea**: Añade nuevas tareas
+5. **Gestionar tareas**: Edita, completa o elimina tareas
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+
+## 📞 Soporte
+
+Para soporte técnico o preguntas, contacta a: gustavofranco2530@gmail.com

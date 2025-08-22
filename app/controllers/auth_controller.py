@@ -47,6 +47,7 @@ def signin_controller():
     context = {"signin_form": signin_form}
 
     if signin_form.validate_on_submit():
+        nombre = signin_form.nombre.data
         email = signin_form.email.data
         password = signin_form.password.data
 
@@ -70,7 +71,9 @@ def signin_controller():
             if password != confirm_password:
                 raise ValueError("Las contraseñas no coinciden.")
 
-            nuevo_usuario = Usuario(email=email, password=hashed_password)
+            nuevo_usuario = Usuario(
+                nombre_usuario=nombre, email=email, password=hashed_password
+            )
             token = generar_token_confirmacion(nuevo_usuario.email)
             nuevo_usuario.token = token
             nuevo_usuario.token_expira = datetime.utcnow() + timedelta(hours=1)

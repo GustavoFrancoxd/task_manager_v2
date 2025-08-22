@@ -6,6 +6,12 @@ from app.extensions import database, mail
 
 
 def create_app():
+    """
+    crea y configura la aplicacion flask
+
+    Returns:
+        Flask: Instancia de la aplicación Flask configurada(booststrap, sqlalchemy, mail, blueprints).
+    """
     app = Flask(__name__)
     app.config.from_object(Config)
     Bootstrap(app)

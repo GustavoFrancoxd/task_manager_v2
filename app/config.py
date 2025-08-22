@@ -2,9 +2,12 @@ from datetime import timedelta
 
 
 class Config:
-    SERVER_NAME = "192.168.4.35:5001"
-    SECRET_KEY = "CLAVE SECRETA"
+    # se le asigna un nombre al servidor que por defecto es "localhost"
+    SERVER_NAME = "192.168.4.45:5001"
     DEBUG = True
+
+    # clave secreta para encriptar sesiones
+    SECRET_KEY = "CLAVE SECRETA"
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
 
     # configuracion de conexion a base de datos

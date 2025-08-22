@@ -24,6 +24,9 @@ class LoginForm(FlaskForm):
 
 
 class SigninForm(FlaskForm):
+    nombre = StringField(
+        "Nombre completo", validators=[DataRequired(), Length(min=2, max=60)]
+    )
     email = StringField(
         "email electrónico",
         validators=[

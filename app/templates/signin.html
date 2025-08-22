@@ -12,6 +12,11 @@
     <form method="POST">
         {{ signin_form.csrf_token }}
         <div class="mb-3">
+            {{ signin_form.nombre.label(class="form-label") }}
+            {{ signin_form.nombre(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
             {{ signin_form.email.label(class="form-label") }}
             {{ signin_form.email(class="form-control") }}
         </div>

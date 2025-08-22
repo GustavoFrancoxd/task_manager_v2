@@ -30,7 +30,7 @@ def dashboard_controller():
         .all()
     )
 
-    context = {"notas": tareas, "email": session["email"]}
+    context = {"notas": tareas, "email": session["email"], "info_usuario": usuario}
 
     return render_template("dashboard.html", **context)
 
