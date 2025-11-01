@@ -21,22 +21,20 @@ Un sistema completo de gestión de tareas desarrollado con Flask que permite a l
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/GustavoFrancoxd/task_manager_v2
 cd task_manager_v2
 ```
 
-### 2. Crear entorno virtual
+### 2. Crear entorno virtual que use python 3.12
 ```bash
-python -m venv venv312
+#windows
+py -3.12 -m venv venv312
 ```
 
 ### 3. Activar entorno virtual
 ```bash
 # Windows
 venv312\Scripts\activate
-
-# Linux/Mac
-source venv312/bin/activate
 ```
 
 ### 4. Instalar dependencias
@@ -77,9 +75,9 @@ task_manager_v2/
 
 Edita el archivo `app/config.py` para personalizar:
 
-- Configuración de base de datos
-- Configuración de email
-- Clave secreta
+- Configuración de base de datos(variable de entorno)
+- Configuración de email(variable de entorno)
+- Clave secreta(variable de entorno)
 - Configuración del servidor
 
 ## 📖 Uso Básico
