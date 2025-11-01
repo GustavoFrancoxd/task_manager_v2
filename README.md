@@ -44,9 +44,10 @@ source venv312/bin/activate
 pip install -r requirements.txt
 ```
 
-### 5. Configurar base de datos
-- Crear una base de datos MySQL llamada `bd_notas`
-- Actualizar las credenciales en `app/config.py`
+### 5. Configurar base de datos y correo
+- crear variables de entorno para la base de datos
+- utilizar cuenta de correo, de preferencia google, despues genenerar una llave de acceso para aplicacion
+- crear las variables de entorno para el correo y otra para la llave de acceso
 
 ### 6. Ejecutar la aplicación
 ```bash
@@ -88,19 +89,3 @@ Edita el archivo `app/config.py` para personalizar:
 3. **Dashboard**: Ve todas tus tareas
 4. **Crear tarea**: Añade nuevas tareas
 5. **Gestionar tareas**: Edita, completa o elimina tareas
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
-
-## 📞 Soporte
-
-Para soporte técnico o preguntas, contacta a: gustavofranco2530@gmail.com
